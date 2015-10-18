@@ -1,19 +1,26 @@
-package com.alpgeeks.phonestop;
+package com.alpgeeks.phonestop.home;
 
+import android.content.res.Resources;
+import android.support.v4.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.alpgeeks.phonestop.navigation.AboutFragment;
+import com.alpgeeks.phonestop.navigation.GetHelpFragment;
+import com.alpgeeks.phonestop.R;
+import com.alpgeeks.phonestop.intro.IntroActivity;
 
 // FIXME : Add animation to the hamburger icon
 // FIXME : Add listener to the hanburger icon
@@ -23,13 +30,13 @@ import android.widget.Toast;
 // Phone Stop...Put a full stop to your phone addiction
 public class HomeActivity extends ActionBarActivity {
 
+    private Toolbar toolbar;
     private String[] mOptionTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ArrayAdapter<String> mOptionAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
-
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -55,24 +62,31 @@ public class HomeActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction();
                 Fragment fragment1;
                 switch (position) {
                     case 0:
                         fragment1 = new HomeFragment();
-                        //fm.beginTransaction().add(R.id.fragment_container,fragment1).commit();
-                        fm.beginTransaction().replace(R.id.fragment_container,fragment1).commit();
+                        transaction.replace(R.id.fragment_container,fragment1).commit();
                         mDrawerLayout.closeDrawers();
-                        Toast.makeText(HomeActivity.this, "Home!", Toast.LENGTH_SHORT).show();
                         break;
-                    case 1:
-                        // Show GetHelpFragment
-                      //  fragment1 = new GetHelpFragment();
-                        // if(fragment1 == null) {
-                        //   fragment1 = new HomeFragment();
-                      //  fm.beginTransaction().add(R.id.fragment_container,fragment1).commit();
-                       // mDrawerLayout.closeDrawers();
-                        //}
-                        Toast.makeText(HomeActivity.this, "Get Help!", Toast.LENGTH_SHORT).show();
+                    case 2:
+                        fragment1 = new GetHelpFragment();
+                        mDrawerLayout.closeDrawers();
+                        transaction.replace(R.id.fragment_container, fragment1);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        break;
+                    case 5:
+                        Intent intent = new Intent(HomeActivity.this,IntroActivity.class);
+                         startActivity(intent);
+                        break;
+                    case 6:
+                        fragment1 = new AboutFragment();
+                        mDrawerLayout.closeDrawers();
+                        transaction.replace(R.id.fragment_container,fragment1);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
                         break;
                     default:
                         Toast.makeText(HomeActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
@@ -112,8 +126,9 @@ public class HomeActivity extends ActionBarActivity {
     }
 
     private void addDrawerItems() {
-        String[] osArray = { "Home", "Get Help", "Intro", "Settings", "About" };
-        mOptionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        Resources resources = getResources();
+        String[] mDrawerItems = resources.getStringArray(R.array.drawer_items);
+        mOptionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mDrawerItems);
         mDrawerList.setAdapter(mOptionAdapter);
     }
 

@@ -1,42 +1,41 @@
-package com.alpgeeks.phonestop;
+package com.alpgeeks.phonestop.home;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.alpgeeks.phonestop.R;
+
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 
 // FIXME : I've added a sample layout for this
 // actual fragment to be taken from prashant and put here for home screen
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeFragment extends Fragment{
-//    implements CompoundButton.OnCheckedChangeListener{
-
+    private final static String LOG_TAG = HomeFragment.class.getSimpleName();
     ListView lv;
     ArrayList<String> appList;
-    // ApplicationListAdapter appListAdapter;
     ArrayAdapter arrayAdapter;
 
+    Button mEnableButton;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,30 +48,40 @@ public class HomeFragment extends Fragment{
 
         lv = (ListView)rootView.findViewById(R.id.listView);
 
-        String[] appNameList = {
-                "App1","App2","App3"
-        };
-
         final Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         PackageManager pm = getActivity().getPackageManager();
         //   final List pkgAppsList = pm.queryIntentActivities(mainIntent, 0);
-        ArrayList<String> results = new ArrayList<>();
+        TreeSet<String> results = new TreeSet<>();
 
 
         List<ResolveInfo> pkgAppsList = pm.queryIntentActivities(mainIntent,
                 PackageManager.PERMISSION_GRANTED);
         for (ResolveInfo rInfo : pkgAppsList) {
+            Log.v(LOG_TAG,rInfo.toString());
             results.add(rInfo.activityInfo.applicationInfo.loadLabel(pm)
                     .toString());
-            //  Log.w("Installed Applications", rInfo.activityInfo.applicationInfo
-            //        .loadLabel(pm).toString());
         }
 
+        mEnableButton = (Button)rootView.findViewById(R.id.enable_button);
+        mEnableButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(getContext(),"Kill",Toast.LENGTH_SHORT);
+                t.show();
+                ActivityManager am = (ActivityManager) getActivity().getSystemService(Activity.ACTIVITY_SERVICE);
+                am.killBackgroundProcesses("com.alpgeeks.samples");
+                am.killBackgroundProcesses("com.whatsapp");
+                am.killBackgroundProcesses("com.toi.reader.activities");
 
-        appList = new ArrayList<String>(Arrays.asList(appNameList));
+
+                WifiManager wifi = (WifiManager) getActivity().getSystemService(getContext().WIFI_SERVICE);
+                wifi.setWifiEnabled(false);
+            }
+        });
+
         arrayAdapter = new ArrayAdapter(getActivity(),
-                R.layout.list_item_forecast,R.id.list_item_forecast_textview,results);
+                R.layout.list_item_forecast,R.id.list_item_forecast_textview,results.toArray());
 
         ListView listView = (ListView)rootView.findViewById(R.id.listView);
         listView.setAdapter(arrayAdapter);

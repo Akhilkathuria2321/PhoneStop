@@ -1,11 +1,11 @@
-package com.alpgeeks.phonestop;
+package com.alpgeeks.phonestop.navigation;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+
+import com.alpgeeks.phonestop.R;
+import com.alpgeeks.phonestop.home.HomeActivity;
 
 public class SplashActivity extends Activity {
 
@@ -18,7 +18,7 @@ public class SplashActivity extends Activity {
         Thread timerThread = new Thread(){
             public void run(){
                 try{
-                    sleep(3000);
+                    sleep(500);
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{

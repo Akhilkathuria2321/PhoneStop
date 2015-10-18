@@ -1,0 +1,50 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.alpgeeks.phonestop.navigation.GetHelpFragment">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center|center_vertical"
+        android:gravity="center"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:weightSum="1">
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="100dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:textSize="40dp"
+            android:ems="15"
+            android:id="@+id/phone_number_text"
+            android:layout_gravity="center_vertical" />
+
+        <Button
+            android:layout_width="223dp"
+            android:layout_height="wrap_content"
+            android:text="Get Help"
+            android:id="@+id/get_help_button"
+            android:layout_gravity="center_horizontal" />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="200dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Leave Your Mobile Addiction To your Friend"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.50" />
+
+    </LinearLayout>
+
+</FrameLayout>
