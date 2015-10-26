@@ -28,6 +28,9 @@
     <string name="title_activity_intro">IntroActivity</string>
     <string name="title_activity_test">testActivity</string>
 
+    <string name="days_title">Select Days</string>
+    <string name="time_range">Select Time Ranges</string>
+
     <string-array name="drawer_items">
         <item>"Home"</item>
         <item>"Statistics"</item>
@@ -37,4 +40,8 @@
         <item>"Intro"</item>
         <item>"About"</item>
     </string-array>
+    
+    <!-- Preferences Strings -->
+    <string name="app_killing_title">Enable App Killing</string>
+    <string name="app_killing_summary">Kills Background Apps in PhoneStop Mode</string>
 </resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference android:title="@string/app_killing_title"
+        android:defaultValue="true"
+        android:summary="@string/app_killing_summary"
+        android:key="app_killing_option" />
+    <CheckBoxPreference android:title="Disable Mobile Data"
+        android:defaultValue="false"
+        android:summary="Disable Mobile data to save battery"
+        android:key="data_disable_option" />
+
+    <EditTextPreference android:title="Get Help Message"
+        android:key="get_help_message"
+        android:summary="Change message that disables your phonestop mode"></EditTextPreference>
+    <EditTextPreference android:title="Time"
+        android:key="surrender_time"
+        android:summary="Minimum time"></EditTextPreference>
+</PreferenceScreen>

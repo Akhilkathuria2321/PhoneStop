@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Existing Profile"
+        android:id="@+id/existing_profiles_text"
+        style="?android:listSeparatorTextViewStyle" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/profiles_list_view"
+        android:layout_gravity="right"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:background="@drawable/border_list_view"
+        android:layout_weight="0.01" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="30dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Make New Profile"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/new_profile_button" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="30dp" />
+
+</LinearLayout>

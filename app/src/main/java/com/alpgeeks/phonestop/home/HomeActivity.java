@@ -18,9 +18,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alpgeeks.phonestop.navigation.AboutFragment;
+import com.alpgeeks.phonestop.navigation.BlankFragment;
 import com.alpgeeks.phonestop.navigation.GetHelpFragment;
 import com.alpgeeks.phonestop.R;
 import com.alpgeeks.phonestop.intro.IntroActivity;
+import com.alpgeeks.phonestop.navigation.PrefsFragment;
+import com.alpgeeks.phonestop.navigation.ProfileListFragment;
+import com.alpgeeks.phonestop.navigation.ProfileTimeFragment;
 
 // FIXME : Add animation to the hamburger icon
 // FIXME : Add listener to the hanburger icon
@@ -37,6 +41,7 @@ public class HomeActivity extends ActionBarActivity {
     private ArrayAdapter<String> mOptionAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
+    private PrefsFragment prefsFragment;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -66,22 +71,50 @@ public class HomeActivity extends ActionBarActivity {
                 Fragment fragment1;
                 switch (position) {
                     case 0:
+                        if(prefsFragment != null)
+                            getFragmentManager().beginTransaction().remove(prefsFragment).commit();
                         fragment1 = new HomeFragment();
                         transaction.replace(R.id.fragment_container,fragment1).commit();
                         mDrawerLayout.closeDrawers();
                         break;
                     case 2:
+                        if(prefsFragment != null)
+                            getFragmentManager().beginTransaction().remove(prefsFragment).commit();
+
                         fragment1 = new GetHelpFragment();
                         mDrawerLayout.closeDrawers();
                         transaction.replace(R.id.fragment_container, fragment1);
                         transaction.addToBackStack(null);
                         transaction.commit();
                         break;
+                    case 3:
+                        if(prefsFragment != null)
+                            getFragmentManager().beginTransaction().remove(prefsFragment).commit();
+
+                        fragment1 = new ProfileListFragment();
+                        mDrawerLayout.closeDrawers();
+                        transaction.replace(R.id.fragment_container,fragment1);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        break;
+                    case 4:
+                        mDrawerLayout.closeDrawers();
+                        prefsFragment = new PrefsFragment();
+                        transaction.replace(R.id.fragment_container,new BlankFragment());
+                        getFragmentManager().beginTransaction().replace(R.id.fragment_container, prefsFragment).commit();
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        break;
                     case 5:
+                        if(prefsFragment != null)
+                            getFragmentManager().beginTransaction().remove(prefsFragment).commit();
+
                         Intent intent = new Intent(HomeActivity.this,IntroActivity.class);
-                         startActivity(intent);
+                        startActivity(intent);
                         break;
                     case 6:
+                        if(prefsFragment != null)
+                            getFragmentManager().beginTransaction().remove(prefsFragment).commit();
                         fragment1 = new AboutFragment();
                         mDrawerLayout.closeDrawers();
                         transaction.replace(R.id.fragment_container,fragment1);

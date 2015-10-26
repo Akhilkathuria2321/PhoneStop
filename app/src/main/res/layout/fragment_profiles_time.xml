@@ -1,0 +1,190 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/profile_time_layout"
+    tools:context="com.alpgeeks.phonestop.navigation.ProfileTimeFragment"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:layout_gravity="left|bottom"
+        android:id="@+id/days_layout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/days_title"
+            android:id="@+id/crime_title_view"
+            style="?android:listSeparatorTextViewStyle" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <ToggleButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textOff="Mon"
+            android:textOn="Mon"
+            android:layout_marginRight="-8dp"
+            android:textAllCaps="false"
+            android:id="@+id/mon_button"
+            android:checked="false" />
+
+        <ToggleButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="-8dp"
+            android:layout_height="wrap_content"
+            android:textOff="Tue"
+            android:textOn="Tue"
+            android:textAllCaps="false"
+            android:id="@+id/tue_button"
+            android:checked="false" />
+
+        <ToggleButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="-8dp"
+            android:textOff="Wed"
+            android:textOn="Wed"
+            android:textAllCaps="false"
+            android:id="@+id/wed_button"
+            android:checked="false" />
+
+        <ToggleButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textOff="Thu"
+            android:textOn="Thu"
+            android:textAllCaps="false"
+            android:layout_marginRight="-8dp"
+            android:id="@+id/thu_button"
+            android:checked="false" />
+
+        <ToggleButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textOff="Fri"
+            android:textOn="Fri"
+            android:textAllCaps="false"
+            android:id="@+id/fri_button"
+            android:layout_marginRight="-8dp"
+            android:checked="false" />
+
+        <ToggleButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textOff="Sat"
+            android:textOn="Sat"
+            android:textAllCaps="false"
+            android:id="@+id/sat_button"
+            android:layout_marginRight="-8dp"
+            android:checked="false" />
+
+        <ToggleButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textOff="Sun"
+            android:textOn="Sun"
+            android:textAllCaps="false"
+            android:id="@+id/sun_button"
+            android:layout_marginRight="-8dp"
+            android:checked="false" />
+
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/time_range"
+        android:id="@+id/time_bar"
+        style="?android:listSeparatorTextViewStyle" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="10dp" />
+
+    <com.alpgeeks.phonestop.view.TimeSelector
+        android:id="@+id/time_selector_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="7dp"
+            android:text="00:00"
+            android:id="@+id/min_time" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_weight="1"
+            android:layout_marginRight="7dp"
+            android:text="24:00"
+            android:id="@+id/max_time" />
+            />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Time Slots Selected"
+        android:id="@+id/list_title"
+        style="?android:listSeparatorTextViewStyle" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="10dp" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="121dp"
+        android:id="@+id/time_list_view"
+        android:layout_gravity="right"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:background="@drawable/border_list_view"
+        android:layout_weight="0.57" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Add time range"
+        android:id="@+id/add_time_button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Apps >>"
+        android:textSize="20dp"
+        android:gravity="bottom"
+        android:background="@android:color/transparent"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/select_apps_button" />
+</LinearLayout>
