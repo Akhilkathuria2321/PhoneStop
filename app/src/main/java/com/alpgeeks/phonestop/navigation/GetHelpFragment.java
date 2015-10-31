@@ -1,6 +1,8 @@
 package com.alpgeeks.phonestop.navigation;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -14,6 +16,9 @@ import android.widget.Toast;
 
 import com.alpgeeks.phonestop.R;
 import com.alpgeeks.phonestop.home.HomeActivity;
+import com.alpgeeks.phonestop.library.SmsReader;
+
+import java.util.ArrayList;
 
 
 /**
@@ -75,6 +80,22 @@ public class GetHelpFragment extends android.support.v4.app.Fragment {
                     Toast.makeText(getContext(), "PhoneStop Enabled", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    ArrayList sms = new ArrayList();
+                    Uri uriSms = Uri.parse("content://sms/inbox");
+                    Cursor cursor = getActivity().getContentResolver().query(uriSms, new String[]{"_id", "address", "date", "body"},null,null,null);
+
+                    String msgData = "";
+                    while  (cursor.moveToNext())
+                    {
+                        String address = cursor.getString(1);
+                        String body = cursor.getString(3);
+
+                        System.out.println("======&gt; Mobile number =&gt; "+address);
+                        System.out.println("=====&gt; SMS Text =&gt; "+body);
+
+                        sms.add("Address=&gt; "+address+"n SMS =&gt; "+body);
+                    }
+
                     Toast.makeText(getContext(), "Please Enter Valid Mobile Number", Toast.LENGTH_SHORT).show();
                 }
             }
