@@ -79,7 +79,7 @@ public class HomeActivity extends ActionBarActivity {
         }
 
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        mActivityTitle = "Home";
+        mActivityTitle = "PhoneStop";
 
         mDrawerList = (ListView)findViewById(R.id.navList);
         addDrawerItems();
@@ -98,7 +98,7 @@ public class HomeActivity extends ActionBarActivity {
                 Fragment fragment1;
                 switch (position) {
                     case 0:
-                        mActivityTitle = "Home";
+                        mActivityTitle = "PhoneStop";
                         if(prefsFragment != null)
                             getFragmentManager().beginTransaction().remove(prefsFragment).commit();
                         fragment1 = new HomeFragment();
@@ -188,7 +188,7 @@ public class HomeActivity extends ActionBarActivity {
 
                // getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon);
 
-               // getSupportActionBar().setTitle("PhoneStop");
+                getSupportActionBar().setTitle("PhoneStop");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
             @Override
@@ -196,7 +196,7 @@ public class HomeActivity extends ActionBarActivity {
                 super.onDrawerClosed(view);
                //getSupportActionBar().setHomeAsUpIndicator(mDrawerArrow);
 
-               // getSupportActionBar().setTitle(mActivityTitle);
+                getSupportActionBar().setTitle(mActivityTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
