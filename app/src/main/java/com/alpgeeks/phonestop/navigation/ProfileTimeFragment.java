@@ -1,12 +1,10 @@
     package com.alpgeeks.phonestop.navigation;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.text.Editable;
 import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +18,12 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.alpgeeks.phonestop.R;
-import com.alpgeeks.phonestop.home.HomeActivity;
 import com.alpgeeks.phonestop.model.Day;
 import com.alpgeeks.phonestop.model.Profile;
 import com.alpgeeks.phonestop.model.ProfileList;
 import com.alpgeeks.phonestop.view.TimeSelector;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ProfileTimeFragment extends android.support.v4.app.Fragment {
@@ -127,9 +123,14 @@ public class ProfileTimeFragment extends android.support.v4.app.Fragment {
                 ProfileList.getInstance().addProfile(userProfile);
                 Log.e(LOG_TAG, userProfile.toString());
                 Toast.makeText(getContext(), userProfile.toString(), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getActivity(), HomeActivity.class);
+               /* Intent intent = new Intent(getActivity(), HomeActivity.class);
                 getActivity().startActivity(intent);
-                startActivity(intent);
+                startActivity(intent);*/
+                android.support.v4.app.Fragment fragment1 = new AppListFragment();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment1);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
         return view;

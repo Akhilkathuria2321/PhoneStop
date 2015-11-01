@@ -1,30 +1,20 @@
 package com.alpgeeks.phonestop.home;
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.alpgeeks.phonestop.R;
+import com.alpgeeks.phonestop.navigation.AppListFragment;
+import com.alpgeeks.phonestop.navigation.PrefsFragment;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 
 // FIXME : I've added a sample layout for this
@@ -34,8 +24,10 @@ public class HomeFragment extends Fragment{
     ListView lv;
     ArrayList<String> appList;
     ArrayAdapter arrayAdapter;
-
-    Button mEnableButton;
+    private ListView mDrawerList;
+    private PrefsFragment prefsFragment;
+    Button mDisableButton;
+    Button mStartButton;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,52 +38,79 @@ public class HomeFragment extends Fragment{
                              Bundle savedhomInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        lv = (ListView)rootView.findViewById(R.id.listView);
+        android.support.v4.app.Fragment fragment1 = new AppListFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment1);
+        transaction.addToBackStack(null);
+        transaction.commit();
+        return rootView;
+    }
 
-        final Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        PackageManager pm = getActivity().getPackageManager();
-        //   final List pkgAppsList = pm.queryIntentActivities(mainIntent, 0);
-        TreeSet<String> results = new TreeSet<>();
 
+/*Old with two buttons
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedhomInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        List<ResolveInfo> pkgAppsList = pm.queryIntentActivities(mainIntent,
-                PackageManager.PERMISSION_GRANTED);
-        for (ResolveInfo rInfo : pkgAppsList) {
-            Log.v(LOG_TAG,rInfo.toString());
-            results.add(rInfo.activityInfo.applicationInfo.loadLabel(pm)
-                    .toString());
-        }
-
-        mEnableButton = (Button)rootView.findViewById(R.id.enable_button);
-        mEnableButton.setOnClickListener(new View.OnClickListener() {
+  final Intent intent = new Intent(getActivity(),AppBlockService.class);
+        mDisableButton = (Button)rootView.findViewById(R.id.disable_button);
+        mDisableButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(getContext(),"Kill",Toast.LENGTH_SHORT);
+
+                Toast t = Toast.makeText(getContext(), "PhoneStop Disabled", Toast.LENGTH_LONG);
                 t.show();
-                ActivityManager am = (ActivityManager) getActivity().getSystemService(Activity.ACTIVITY_SERVICE);
-                am.killBackgroundProcesses("com.alpgeeks.samples");
-                am.killBackgroundProcesses("com.whatsapp");
-                am.killBackgroundProcesses("com.toi.reader.activities");
+                getActivity().stopService(intent);
 
-
-                WifiManager wifi = (WifiManager) getActivity().getSystemService(getContext().WIFI_SERVICE);
-                wifi.setWifiEnabled(false);
             }
         });
 
-        arrayAdapter = new ArrayAdapter(getActivity(),
-                R.layout.list_item_forecast,R.id.list_item_forecast_textview,results.toArray());
 
-        ListView listView = (ListView)rootView.findViewById(R.id.listView);
-        listView.setAdapter(arrayAdapter);
+        mStartButton = (Button)rootView.findViewById(R.id.start_button);
+        mStartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+
+
+                    try {
+                        PackageManager packageManager = getActivity().getPackageManager();
+                        ApplicationInfo applicationInfo = packageManager.getApplicationInfo(getActivity().getPackageName(), 0);
+                        AppOpsManager appOpsManager = (AppOpsManager) getActivity().getSystemService(Context.APP_OPS_SERVICE);
+                        int mode = appOpsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, applicationInfo.uid, applicationInfo.packageName);
+
+                        if (mode != AppOpsManager.MODE_ALLOWED) {
+                            Toast.makeText(getContext(),"Enable the permission to use PhoneStop",Toast.LENGTH_SHORT).show();
+                            Intent intent1 = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+                            startActivity(intent1);
+                        }
+                    } catch (PackageManager.NameNotFoundException e) {
+
+                        Intent intent1 = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+                        startActivity(intent1);
+
+                    }
+                    getActivity().startService(intent);
+                    getActivity().finish();
 
 
 
-        //displayAppList();
-        // Inflate the layout for this fragment
+
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+
+
         return rootView;
     }
+    */
+
+
 
     /*private void displayAppList() {
         appList = new ArrayList<>();

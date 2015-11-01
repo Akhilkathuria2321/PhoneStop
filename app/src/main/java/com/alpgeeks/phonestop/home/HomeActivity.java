@@ -1,20 +1,19 @@
 package com.alpgeeks.phonestop.home;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.v4.app.FragmentTransaction;
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.os.Bundle;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,11 +22,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.alpgeeks.phonestop.R;
+import com.alpgeeks.phonestop.intro.IntroActivity;
 import com.alpgeeks.phonestop.navigation.AboutFragment;
 import com.alpgeeks.phonestop.navigation.BlankFragment;
 import com.alpgeeks.phonestop.navigation.GetHelpFragment;
-import com.alpgeeks.phonestop.R;
-import com.alpgeeks.phonestop.intro.IntroActivity;
 import com.alpgeeks.phonestop.navigation.PrefsFragment;
 import com.alpgeeks.phonestop.navigation.ProfileListFragment;
 
@@ -62,10 +61,13 @@ public class HomeActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        mDrawerArrow = new DrawerArrowDrawable(this);
-        mDrawerArrow.setColor(0xffffffff);
-        mDrawerArrow.setSpinEnabled(true);
+//Prashant
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+//Prashant
+       // mDrawerArrow = new DrawerArrowDrawable(this);
+       // mDrawerArrow.setColor(0xffffffff);
+       // mDrawerArrow.setSpinEnabled(true);
 
         mTitle = mDrawerTitle = "Title";
 
@@ -82,10 +84,10 @@ public class HomeActivity extends ActionBarActivity {
         mDrawerList = (ListView)findViewById(R.id.navList);
         addDrawerItems();
 
-        getSupportActionBar().setHomeButtonEnabled(true);
+        /*getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(mDrawerArrow);
-        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);*/
 
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -184,23 +186,24 @@ public class HomeActivity extends ActionBarActivity {
             public void onDrawerOpened(View view) {
                 super.onDrawerOpened(view);
 
-                getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon);
+               // getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon);
 
-                getSupportActionBar().setTitle("PhoneStop");
+               // getSupportActionBar().setTitle("PhoneStop");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
             @Override
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getSupportActionBar().setHomeAsUpIndicator(mDrawerArrow);
-                getSupportActionBar().setTitle(mActivityTitle);
+               //getSupportActionBar().setHomeAsUpIndicator(mDrawerArrow);
+
+               // getSupportActionBar().setTitle(mActivityTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
-            @Override
+     /*      @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
 
-                }
+                }*/
 
         };
 
@@ -225,7 +228,10 @@ public class HomeActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.drawer_layout) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+    /*    if (id == R.id.drawer_layout) {
             return true;
         }
         else if(id == 16908332) {
@@ -235,9 +241,14 @@ public class HomeActivity extends ActionBarActivity {
 
             else
                 mDrawerLayout.openDrawer(Gravity.LEFT);
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
     }
 
     private void addDrawerItems() {

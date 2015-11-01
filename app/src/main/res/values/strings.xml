@@ -44,4 +44,5 @@
     <!-- Preferences Strings -->
     <string name="app_killing_title">Enable App Killing</string>
     <string name="app_killing_summary">Kills Background Apps in PhoneStop Mode</string>
+    <string name="title_activity_lock_screen">LockScreenActivity</string>
 </resources>

@@ -4,17 +4,22 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-
-    <ListView
+    <!--  <ListView
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/listView"
+            android:layout_weight="0.85"></ListView>-->
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/listView"
-        android:layout_weight="0.85"></ListView>
+        android:layout_height="wrap_content"
+        android:text="Start PhoneStop"
+        android:id="@+id/start_button"
+        android:layout_gravity="center_horizontal|bottom" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enable PhoneStop"
-        android:id="@+id/enable_button"
+        android:text="Disable PhoneStop"
+        android:id="@+id/disable_button"
         android:layout_gravity="center_horizontal|bottom" />
 </LinearLayout>
