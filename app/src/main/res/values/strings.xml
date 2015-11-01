@@ -36,6 +36,14 @@
     <string name="phonestop_enable_msg">PhoneStop Mode Enable</string>
     <string name="enter_valid_msg">Please Enter Valid Mobile Number</string>
     <string name="phonestop_enabled_msg">PhoneStop Mode Enabled</string>
+    <string name="disable_msg">"PhoneStop Disabled"</string>
+
+    <!-- Button Texts -->
+    <string name="button_enable_phonestop">"Enable PhoneStop"</string>
+    <string name="button_disable_phonestop">"Disable PhoneStop"</string>
+
+    <!-- Saved Data -->
+    <string name="saved_phonestop_state">PhoneStopState</string>
 
     <!-- Miscellaneous Strings -->
     <string name="days_title">Select Days</string>

@@ -4,6 +4,7 @@ import android.app.AppOpsManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+// FIXME - remove PhoneStop from the list
+
 /**
  * Home Fragment which contains list of applications and an enable disable
  * button. This button toggles the state of phonestop.
@@ -36,10 +39,11 @@ public class AppListFragment extends android.support.v4.app.Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_profileName = null;
     private static final String ARG_PARAM2 = "param2";
-    CheckBox mSelectAppCheckbox;
-    Button mEnableButton;
-    ListView mAppList;
-    Context context;
+    private CheckBox mSelectAppCheckbox;
+    private Button mEnableButton;
+    private ListView mAppList;
+    private Context context;
+    private boolean mPhoneStopEnabled = false;
 
     // TODO: Rename and change types of parameters
     private String mprofileName;
@@ -62,9 +66,10 @@ public class AppListFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mprofileName = getArguments().getString(ARG_profileName);
-           // mParam2 = getArguments().getString(ARG_PARAM2);
+            // mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -83,36 +88,31 @@ public class AppListFragment extends android.support.v4.app.Fragment {
         mEnableButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mEnableButton.getText().equals("Enable PhoneStop")) {
-                    String s = "";
+                if (!mPhoneStopEnabled) {
+                    mPhoneStopEnabled = true;
+                    StringBuilder stringBuilder = new StringBuilder();
                     String blockApp = "";
                     for (int i = 0; i < apps.size(); i++) {
-
                         if (apps.get(i).selected) {
-                            s = s + apps.get(i).appname + "\n";
+                            stringBuilder.append(apps.get(i).appname + "\n");
                             blockApp = blockApp + "\n" + apps.get(i).pname;
                         }
-
                     }
-                    Toast.makeText(context, s, Toast.LENGTH_LONG).show();
+                    // Delete additional endline character
+                    String s = stringBuilder.substring(0, stringBuilder.length()-1);
+                    Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
 
                     try {
-
-
                         context.deleteFile("Profile.ini");
                         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("Profile.ini", context.MODE_PRIVATE));
                         outputStreamWriter.write(blockApp);
                         outputStreamWriter.close();
-
-
                     } catch (IOException e) {
                         Log.e("Exception", "File write failed: " + e.toString());
                     }
-/* Enable phonestop by calling AppBlockService
-*/
+
+                    // Enable PhoneStop by calling AppBlockService
                     try {
-
-
                         try {
                             PackageManager packageManager = getActivity().getPackageManager();
                             ApplicationInfo applicationInfo = packageManager.getApplicationInfo(getActivity().getPackageName(), 0);
@@ -125,71 +125,27 @@ public class AppListFragment extends android.support.v4.app.Fragment {
                                 startActivity(intent1);
                             }
                         } catch (PackageManager.NameNotFoundException e) {
-
                             Intent intent1 = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
                             startActivity(intent1);
 
                         }
                         getActivity().startService(intent);
-                        mEnableButton.setText("Disable");
-                        // getActivity().finish();
+                        mEnableButton.setText(R.string.button_disable_phonestop);
+                        getActivity().finish();
                     } catch (Exception e) {
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-
-                } else if (mEnableButton.getText().equals("Disable")) {
+                } else if (mPhoneStopEnabled) {
+                    mPhoneStopEnabled = false;
                     getActivity().stopService(intent);
-                    mEnableButton.setText("Enable PhoneStop");
-                    Toast.makeText(context, "Disable", Toast.LENGTH_LONG).show();
+                    mEnableButton.setText(R.string.button_enable_phonestop);
+                    Toast.makeText(context, R.string.disable_msg, Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
 
-/* Enable phonestop by calling AppBlockService
-*/
         return rootView;
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    /*public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }*/
-
-/*    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-*//*
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-*/
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-   /* public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }*/
 
     private ArrayList<PackageInfo> getPackages()
     {
@@ -222,7 +178,10 @@ public class AppListFragment extends android.support.v4.app.Fragment {
                 //This app is a non-system app
                 res.add(newInfo);
             }
-        }/*
+        }
+
+        // FIXME : Delete this commented code in final application
+        /*
         for(int i=0;i<packs.size();i++) {
             PackageInfo p = packs.get(i);
             if ((!getSysPackages) && (p.versionName == null)) {
@@ -237,5 +196,27 @@ public class AppListFragment extends android.support.v4.app.Fragment {
             res.add(newInfo);
         }*/
         return res;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(getString(R.string.saved_phonestop_state), mPhoneStopEnabled);
+        editor.commit();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        mPhoneStopEnabled = sharedPref.getBoolean(getString(R.string.saved_phonestop_state), false);
+
+        // Update button text
+        if(mPhoneStopEnabled)
+            mEnableButton.setText(R.string.button_disable_phonestop);
+        else
+            mEnableButton.setText(R.string.button_enable_phonestop);
     }
 }

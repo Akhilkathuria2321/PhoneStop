@@ -118,12 +118,12 @@ public class CustomAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Toast.makeText(context, "You Clicked " + applist.get(position).pname,
-                        Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(context, "You Clicked " + applist.get(position).pname,
+               //         Toast.LENGTH_SHORT).show();
                 // AppsActivity ap = new AppsActivity();
                 //ap.set(applist.get(position).pname+"."+applist.get(position).appname);
-                Toast.makeText(context, "Disabled " + applist.get(position).pname,
-                        Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(context, "Disabled " + applist.get(position).pname,
+                //        Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.alpgeeks.phonestop.R;
 import com.alpgeeks.phonestop.home.HomeActivity;
 
+// FIXME : to add setting : Disable wifi in mobilestop mode
 public class PrefsFragment extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
