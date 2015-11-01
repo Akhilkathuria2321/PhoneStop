@@ -82,15 +82,15 @@ public class IntroActivity extends FragmentActivity {
             switch (position) {
                 case 0:
                     fragment = new IntroPage1Fragment();
-                    mSkipButton.setText("Skip >>");
+                    mSkipButton.setText(getString(R.string.skip_message));
                     break;
                 case 1:
                     fragment = new IntroPage2Fragment();
-                    mSkipButton.setText("Skip >>");
+                    mSkipButton.setText(getString(R.string.skip_message));
                     break;
                 case 2:
                     fragment = new IntroPage3Fragment();
-                    mSkipButton.setText("Done");
+                    mSkipButton.setText(getString(R.string.skip_message));
                     break;
                 default:
                     fragment = new IntroPage1Fragment();

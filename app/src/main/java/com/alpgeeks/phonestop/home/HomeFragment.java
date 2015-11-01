@@ -16,18 +16,19 @@ import com.alpgeeks.phonestop.navigation.PrefsFragment;
 
 import java.util.ArrayList;
 
-
-// FIXME : I've added a sample layout for this
-// actual fragment to be taken from prashant and put here for home screen
+/**
+ * Main Fragment contained by HomeActivity which displays the list of applications
+ * installed.
+ */
 public class HomeFragment extends Fragment{
     private final static String LOG_TAG = HomeFragment.class.getSimpleName();
+
     ListView lv;
     ArrayList<String> appList;
     ArrayAdapter arrayAdapter;
     private ListView mDrawerList;
     private PrefsFragment prefsFragment;
-    Button mDisableButton;
-    Button mStartButton;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,16 +39,18 @@ public class HomeFragment extends Fragment{
                              Bundle savedhomInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        android.support.v4.app.Fragment fragment1 = new AppListFragment();
+        android.support.v4.app.Fragment appListFragment = new AppListFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment1);
+        transaction.replace(R.id.fragment_container, appListFragment);
         transaction.addToBackStack(null);
         transaction.commit();
         return rootView;
     }
-
-
+// FIXME : Remove this commented code in final application
 /*Old with two buttons
+
+    Button mDisableButton;
+    Button mStartButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedhomInstanceState) {
@@ -102,15 +105,9 @@ public class HomeFragment extends Fragment{
                 }
             }
         });
-
-
-
-
         return rootView;
     }
     */
-
-
 
     /*private void displayAppList() {
         appList = new ArrayList<>();

@@ -25,6 +25,8 @@ import java.util.ArrayList;
  * Created by dexter on 10-28-2015.
  */
 public class CustomAdapter extends BaseAdapter {
+    private static final String LOG_TAG = CustomAdapter.class.getSimpleName();
+
     ArrayList<com.alpgeeks.phonestop.model.PackageInfo> applist;
     Context context;
     int [] imageId;
@@ -57,38 +59,33 @@ public class CustomAdapter extends BaseAdapter {
             }
         }
         catch (FileNotFoundException e) {
-            Log.e("Prashant", "File not found: " + e.toString());
+            Log.e(LOG_TAG, "File not found: " + e.toString());
         } catch (IOException e) {
-            Log.e("Prashant", "Can not read file: " + e.toString());
+            Log.e(LOG_TAG, "Can not read file: " + e.toString());
         }
-
-
-
     }
+
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return applist.size() ;
     }
 
     @Override
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
-    public class Holder
-    {
+    public class Holder {
         TextView tv;
         ImageView img;
         CheckBox app;
     }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub

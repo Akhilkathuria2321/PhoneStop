@@ -2,7 +2,6 @@ package com.alpgeeks.phonestop.navigation;
 
 import android.app.AppOpsManager;
 import android.app.Application;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -29,12 +28,8 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AppListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AppListFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Home Fragment which contains list of applications and an enable disable
+ * button. This button toggles the state of phonestop.
  */
 public class AppListFragment extends android.support.v4.app.Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -42,27 +37,14 @@ public class AppListFragment extends android.support.v4.app.Fragment {
     private static final String ARG_profileName = null;
     private static final String ARG_PARAM2 = "param2";
     CheckBox mSelectAppCheckbox;
-    Button mSaveButton;
-    ListView listView;
+    Button mEnableButton;
+    ListView mAppList;
     Context context;
-
 
     // TODO: Rename and change types of parameters
     private String mprofileName;
     private String mParam2;
 
-
-
-//    private OnFragmentInteractionListener mListener;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AppListFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static AppListFragment newInstance(String profileName) {
         AppListFragment fragment = new AppListFragment();
@@ -84,10 +66,6 @@ public class AppListFragment extends android.support.v4.app.Fragment {
             mprofileName = getArguments().getString(ARG_profileName);
            // mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
-
-
     }
 
     @Override
@@ -99,19 +77,19 @@ public class AppListFragment extends android.support.v4.app.Fragment {
         context=getContext();
         final Intent intent = new Intent(getActivity(),AppBlockService.class);
         final ArrayList<PackageInfo> apps=getPackages();
-        listView = (ListView)rootView.findViewById(R.id.listView_apps);
-        listView.setAdapter(new CustomAdapter(getActivity(), apps));
-        mSaveButton =(Button)rootView.findViewById(R.id.btnSaveSelection);
-        mSaveButton.setOnClickListener(new View.OnClickListener() {
+        mAppList = (ListView)rootView.findViewById(R.id.listView_apps);
+        mAppList.setAdapter(new CustomAdapter(getActivity(), apps));
+        mEnableButton =(Button)rootView.findViewById(R.id.btnSaveSelection);
+        mEnableButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mSaveButton.getText().equals("Enable PhoneStop")) {
-                    String s="";
-                    String blockApp="";
-                    for(int i=0; i<  apps.size(); i++){
+                if (mEnableButton.getText().equals("Enable PhoneStop")) {
+                    String s = "";
+                    String blockApp = "";
+                    for (int i = 0; i < apps.size(); i++) {
 
-                        if(apps.get(i).selected) {
-                            s = s + apps.get(i).appname+"\n";
+                        if (apps.get(i).selected) {
+                            s = s + apps.get(i).appname + "\n";
                             blockApp = blockApp + "\n" + apps.get(i).pname;
                         }
 
@@ -127,10 +105,7 @@ public class AppListFragment extends android.support.v4.app.Fragment {
                         outputStreamWriter.close();
 
 
-
-
-                    }
-                    catch (IOException e) {
+                    } catch (IOException e) {
                         Log.e("Exception", "File write failed: " + e.toString());
                     }
 /* Enable phonestop by calling AppBlockService
@@ -145,7 +120,7 @@ public class AppListFragment extends android.support.v4.app.Fragment {
                             int mode = appOpsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, applicationInfo.uid, applicationInfo.packageName);
 
                             if (mode != AppOpsManager.MODE_ALLOWED) {
-                                Toast.makeText(getContext(),"Enable the permission to use PhoneStop",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Enable the permission to use PhoneStop", Toast.LENGTH_SHORT).show();
                                 Intent intent1 = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
                                 startActivity(intent1);
                             }
@@ -156,16 +131,15 @@ public class AppListFragment extends android.support.v4.app.Fragment {
 
                         }
                         getActivity().startService(intent);
-                        mSaveButton.setText("Disable");
+                        mEnableButton.setText("Disable");
                         // getActivity().finish();
                     } catch (Exception e) {
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
-                }
-                else if(mSaveButton.getText().equals("Disable")) {
+                } else if (mEnableButton.getText().equals("Disable")) {
                     getActivity().stopService(intent);
-                    mSaveButton.setText("Enable PhoneStop");
+                    mEnableButton.setText("Enable PhoneStop");
                     Toast.makeText(context, "Disable", Toast.LENGTH_LONG).show();
                 }
 
@@ -175,8 +149,6 @@ public class AppListFragment extends android.support.v4.app.Fragment {
 
 /* Enable phonestop by calling AppBlockService
 */
-
-
         return rootView;
     }
 
@@ -265,13 +237,5 @@ public class AppListFragment extends android.support.v4.app.Fragment {
             res.add(newInfo);
         }*/
         return res;
-    }
-    public  void set(String name)
-    {
-
-
-        Toast.makeText(getContext(),name,Toast.LENGTH_SHORT).show();
-
-
     }
 }

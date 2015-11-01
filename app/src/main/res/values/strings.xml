@@ -1,36 +1,13 @@
 <resources>
+    <!-- Application Strings -->
     <string name="app_name">PhoneStop</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_home">PhoneStop</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-
+    <!-- Navigation Drawer Strings -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_example">Example action</string>
-    <string-array name="navigation_menu">
-        <item>Home</item>
-        <item>Intro</item>
-        <item>Get Help</item>
-        <item>Show Statistics</item>
-        <item>Settings</item>
-        <item>About</item>
-    </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_splash">SplashActivity</string>
-    <string name="title_activity_intro">IntroActivity</string>
-    <string name="title_activity_test">testActivity</string>
-
-    <string name="days_title">Select Days</string>
-    <string name="time_range">Select Time Ranges</string>
-
+    <!-- Navigation Drawer Items -->
     <string-array name="drawer_items">
         <item>"Home"</item>
         <item>"Statistics"</item>
@@ -40,9 +17,32 @@
         <item>"Intro"</item>
         <item>"About"</item>
     </string-array>
-    
+
     <!-- Preferences Strings -->
     <string name="app_killing_title">Enable App Killing</string>
     <string name="app_killing_summary">Kills Background Apps in PhoneStop Mode</string>
     <string name="title_activity_lock_screen">LockScreenActivity</string>
+
+    <!-- Fragment Titles -->
+    <string name="title_phonestop">PhoneStop</string>
+    <string name="title_statistics">Statistics</string>
+    <string name="title_get_help">Get Help</string>
+    <string name="title_profiles">Profiles</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_intro">Intro</string>
+    <string name="title_about">About</string>
+
+    <!-- Toast Messages -->
+    <string name="phonestop_enable_msg">PhoneStop Mode Enable</string>
+    <string name="enter_valid_msg">Please Enter Valid Mobile Number</string>
+    <string name="phonestop_enabled_msg">PhoneStop Mode Enabled</string>
+
+    <!-- Miscellaneous Strings -->
+    <string name="days_title">Select Days</string>
+    <string name="time_range">Select Time Ranges</string>
+    <string name="skip_message">Skip >></string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_intro">IntroActivity</string>
+    <string name="title_activity_test">testActivity</string>
 </resources>

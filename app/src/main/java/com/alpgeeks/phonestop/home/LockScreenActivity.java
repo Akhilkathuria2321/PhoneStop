@@ -7,24 +7,20 @@ import android.widget.Toast;
 
 import com.alpgeeks.phonestop.R;
 
+/**
+ * Blank activity which is used to display toast to user if he tries to open
+ * blocked applications in PhoneStop mode.
+ */
 public class LockScreenActivity extends AppCompatActivity {
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_lock);
 
         finish();
-        Toast.makeText(getApplicationContext(), "PhoneStop mode enabled", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),
+                getString(R.string.phonestop_enable_msg), Toast.LENGTH_SHORT).show();
     }
-
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_lock, menu);
-        return true;
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

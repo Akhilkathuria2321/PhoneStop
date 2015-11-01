@@ -32,14 +32,15 @@ import com.alpgeeks.phonestop.navigation.ProfileListFragment;
 
 import java.util.ArrayList;
 
-// FIXME : Add animation to the hamburger icon
-// FIXME : Add listener to the hanburger icon
 // FIXME : Add toast messages if the user is trying to cheat
 // FIXME : update the classes with Model view details etc.
-// FIXME : Flash screen with mobile symbol and
-// Phone Stop...Put a full stop to your phone addiction
-public class HomeActivity extends ActionBarActivity {
 
+/**
+ * Main Activity for PhoneStop Application. It contains navigation drawer to
+ * navigate across functionalities.
+ */
+public class HomeActivity extends ActionBarActivity {
+    private final static String LOG_TAG = HomeActivity.class.getSimpleName();
     private Toolbar toolbar;
     private String[] mOptionTitles;
     private DrawerLayout
@@ -61,15 +62,11 @@ public class HomeActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-//Prashant
+        //Prashant
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-//Prashant
-       // mDrawerArrow = new DrawerArrowDrawable(this);
-       // mDrawerArrow.setColor(0xffffffff);
-       // mDrawerArrow.setSpinEnabled(true);
 
-        mTitle = mDrawerTitle = "Title";
+        mTitle = mDrawerTitle = getString(R.string.title_statistics);;
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
@@ -79,16 +76,10 @@ public class HomeActivity extends ActionBarActivity {
         }
 
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        mActivityTitle = "PhoneStop";
+        mActivityTitle = getString(R.string.title_phonestop);
 
         mDrawerList = (ListView)findViewById(R.id.navList);
         addDrawerItems();
-
-        /*getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(mDrawerArrow);
-        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);*/
-
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -98,7 +89,7 @@ public class HomeActivity extends ActionBarActivity {
                 Fragment fragment1;
                 switch (position) {
                     case 0:
-                        mActivityTitle = "PhoneStop";
+                        mActivityTitle = getString(R.string.title_phonestop);
                         if(prefsFragment != null)
                             getFragmentManager().beginTransaction().remove(prefsFragment).commit();
                         fragment1 = new HomeFragment();
@@ -107,25 +98,11 @@ public class HomeActivity extends ActionBarActivity {
                         break;
 
                     case 1 :
-                        mActivityTitle = "Statistics";
-                     ArrayList sms = new ArrayList();
-                    Uri uriSms = Uri.parse("content://sms/inbox");
-                    Cursor cursor = getContentResolver().query(uriSms, new String[]{"_id", "address", "date", "body"}, null, null, null);
-
-                    String msgData = "";
-                    while  (cursor.moveToNext())
-                    {
-                        String address = cursor.getString(1);
-                        String body = cursor.getString(3);
-
-                        System.out.println("======&gt; Mobile number =&gt; "+address);
-                        System.out.println("=====&gt; SMS Text =&gt; "+body);
-
-                        sms.add("Address=&gt; "+address+"n SMS =&gt; "+body);
-                    }
-                    break;
+                        mActivityTitle = getString(R.string.title_statistics);
+                        Toast.makeText(HomeActivity.this, "Statistics", Toast.LENGTH_SHORT).show();
+                        break;
                     case 2:
-                        mActivityTitle = "Get Help";
+                        mActivityTitle = getString(R.string.title_get_help);
                         if(prefsFragment != null)
                             getFragmentManager().beginTransaction().remove(prefsFragment).commit();
 
@@ -136,7 +113,7 @@ public class HomeActivity extends ActionBarActivity {
                         transaction.commit();
                         break;
                     case 3:
-                        mActivityTitle = "Profiles";
+                        mActivityTitle = getString(R.string.title_profiles);
                         if(prefsFragment != null)
                             getFragmentManager().beginTransaction().remove(prefsFragment).commit();
 
@@ -147,7 +124,7 @@ public class HomeActivity extends ActionBarActivity {
                         transaction.commit();
                         break;
                     case 4:
-                        mActivityTitle = "Settings";
+                        mActivityTitle = getString(R.string.title_settings);
                         mDrawerLayout.closeDrawers();
                         prefsFragment = new PrefsFragment();
                         transaction.replace(R.id.fragment_container,new BlankFragment());
@@ -156,7 +133,7 @@ public class HomeActivity extends ActionBarActivity {
                         transaction.commit();
                         break;
                     case 5:
-                        mActivityTitle = "Intro";
+                        mActivityTitle = getString(R.string.title_intro);
                         if(prefsFragment != null)
                             getFragmentManager().beginTransaction().remove(prefsFragment).commit();
 
@@ -164,7 +141,7 @@ public class HomeActivity extends ActionBarActivity {
                         startActivity(intent);
                         break;
                     case 6:
-                        mActivityTitle = "About";
+                        mActivityTitle = getString(R.string.title_about);
                         if(prefsFragment != null)
                             getFragmentManager().beginTransaction().remove(prefsFragment).commit();
                         fragment1 = new AboutFragment();
@@ -180,42 +157,29 @@ public class HomeActivity extends ActionBarActivity {
             }
         });
 
+        // Define drawer operations and change ActionBar title
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override
             public void onDrawerOpened(View view) {
                 super.onDrawerOpened(view);
-
-               // getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon);
-
-                getSupportActionBar().setTitle("PhoneStop");
+                getSupportActionBar().setTitle(getString(R.string.title_phonestop));
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
             @Override
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-               //getSupportActionBar().setHomeAsUpIndicator(mDrawerArrow);
-
                 getSupportActionBar().setTitle(mActivityTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
-
-     /*      @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-
-                }*/
-
         };
 
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        // getActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-        // getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu : This adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
@@ -231,20 +195,10 @@ public class HomeActivity extends ActionBarActivity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-    /*    if (id == R.id.drawer_layout) {
-            return true;
-        }
-        else if(id == 16908332) {
-            if(mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-            }
-
-            else
-                mDrawerLayout.openDrawer(Gravity.LEFT);
-        }*/
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -257,9 +211,4 @@ public class HomeActivity extends ActionBarActivity {
         mOptionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mDrawerItems);
         mDrawerList.setAdapter(mOptionAdapter);
     }
-
-    private void setUpDrawer() {
-
-    }
 }
-

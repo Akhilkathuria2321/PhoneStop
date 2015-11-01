@@ -20,13 +20,9 @@ import com.alpgeeks.phonestop.library.SmsReader;
 
 import java.util.ArrayList;
 
-
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
- * Use the {@link GetHelpFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment displaying a random motivating quote and taking user's friend phone
+ * number.
  */
 public class GetHelpFragment extends android.support.v4.app.Fragment {
     private static final String LOG_TAG = GetHelpFragment.class.getSimpleName();
@@ -77,30 +73,13 @@ public class GetHelpFragment extends android.support.v4.app.Fragment {
                     Intent intent = new Intent(getActivity(), HomeActivity.class);
                     getActivity().startActivity(intent);
                     startActivity(intent);
-                    Toast.makeText(getContext(), "PhoneStop Enabled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),getString(R.string.phonestop_enabled_msg), Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    ArrayList sms = new ArrayList();
-                    Uri uriSms = Uri.parse("content://sms/inbox");
-                    Cursor cursor = getActivity().getContentResolver().query(uriSms, new String[]{"_id", "address", "date", "body"},null,null,null);
-
-                    String msgData = "";
-                    while  (cursor.moveToNext())
-                    {
-                        String address = cursor.getString(1);
-                        String body = cursor.getString(3);
-
-                        System.out.println("======&gt; Mobile number =&gt; "+address);
-                        System.out.println("=====&gt; SMS Text =&gt; "+body);
-
-                        sms.add("Address=&gt; "+address+"n SMS =&gt; "+body);
-                    }
-
-                    Toast.makeText(getContext(), "Please Enter Valid Mobile Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.enter_valid_msg), Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        // Inflate the layout for this fragment
         return v;
     }
 
